@@ -13,9 +13,9 @@ maven_jar(
   sha1 = "6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9",
 )
 
-maven_jar(
+bind(
   name = "jsr305",
-  artifact = "com.google.code.findbugs:jsr305:3.0.1",
+  actual = "//third_party/jsr305"
 )
 
 git_repository(
