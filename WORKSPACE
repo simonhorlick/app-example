@@ -29,12 +29,6 @@ git_repository(
   tag = "v3.0.0-beta-2",
 )
 
-#git_repository(
-#  name = "grpc",
-#  remote = "https://github.com/grpc/grpc.git",
-#  tag = "release-0_13_1",
-#)
-
 bind(
   name = "protobuf_java_lib",
   actual = "@protobuf//:protobuf_java",
@@ -62,11 +56,6 @@ maven_jar(
   artifact = "io.grpc:grpc-all:0.13.2",
 )
 
-#maven_jar(
-#  name = "netty",
-#  artifact = "io.netty:netty-codec-http2:4.1.0.CR7"
-#)
-
 maven_jar(
   name = "netty_maven",
   artifact = "io.netty:netty-all:4.1.0.CR7"
@@ -76,21 +65,6 @@ bind(
   name = "netty_all",
   actual = "@netty_maven//jar",
 )
-
-#maven_jar(
-#  name = "netty_epoll",
-#  artifact = "io.netty:netty-transport-native-epoll:4.1.0.CR7"
-#)
-#
-#maven_jar(
-#  name = "netty_tcnative_maven",
-#  artifact = "io.netty:netty-tcnative:1.1.33.Fork15"
-#)
-#
-#bind(
-#  name = "netty_tcnative",
-#  actual = "@netty_tcnative_maven//jar"
-#)
 
 bind(
   name = "jsr305",
@@ -161,8 +135,6 @@ bind(
   actual = "//third_party/nanopb",
 )
 
-# ===== gRPC dependencies =====
-
 bind(
     name = "libssl",
     actual = "@boringssl_git//:ssl",
@@ -176,12 +148,6 @@ bind(
 bind(
     name = "proto_objc_rpc",
     actual = "//third_party/grpc/upstream:proto_objc_rpc",
-)
-
-git_repository(
-  name = "protobuf",
-  remote = "https://github.com/google/protobuf.git",
-  tag = "v3.0.0-beta-2",
 )
 
 # Protobuf compiler binary
