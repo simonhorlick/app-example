@@ -169,7 +169,7 @@ def proto_library(name, src, deps=[],
     if has_service:
       java_deps += [
         "@grpc_all//jar",
-        "@guava//jar",
+        "@guava_maven//jar",
       ]
     for dep in deps:
       java_deps += [dep + "_java"]
