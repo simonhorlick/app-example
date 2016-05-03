@@ -1,0 +1,6 @@
+[submodule "third_party/grpc-java/upstream"]
+	path = third_party/grpc-java/upstream
+	url = https://github.com/grpc/grpc-java.git
+[submodule "third_party/grpc/upstream"]
+	path = third_party/grpc/upstream
+	url = https://github.com/grpc/grpc.git

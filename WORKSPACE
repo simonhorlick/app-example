@@ -156,3 +156,78 @@ maven_jar(
   artifact = "org.slf4j:slf4j-api:1.7.13",
   sha1 = "7fcf30c25b8f4a9379b9dad0d3f487b25272c026",
 )
+bind(
+  name = "nanopb",
+  actual = "//third_party/nanopb",
+)
+
+# ===== gRPC dependencies =====
+
+bind(
+    name = "libssl",
+    actual = "@boringssl_git//:ssl",
+)
+
+bind(
+    name = "libssl_objc",
+    actual = "//third_party/openssl:libssl_objc",
+)
+
+bind(
+    name = "proto_objc_rpc",
+    actual = "//third_party/grpc/upstream:proto_objc_rpc",
+)
+
+git_repository(
+  name = "protobuf",
+  remote = "https://github.com/google/protobuf.git",
+  tag = "v3.0.0-beta-2",
+)
+
+# Protobuf compiler binary
+bind(
+  name = "protoc",
+  actual = "@protobuf//:protoc"
+)
+
+# Library needed to build protobuf codegen plugin.
+bind(
+  name = "protobuf_compiler",
+  actual = "@protobuf//:protoc_lib",
+)
+
+bind(
+  name = "protobuf_objc",
+  actual = "@protobuf//:protobuf_objc"
+)
+
+bind(
+  name = "grpc_protoc_plugin_objc",
+  actual = "//third_party/grpc/upstream:grpc_objective_c_plugin"
+)
+
+
+git_repository(
+    name = "boringssl_git",
+    init_submodules = True,
+    # Use this one for linux:
+    #remote = "https://github.com/mdsteele/boringssl-bazel.git",
+    #commit = "436432d849b83ab90f18773e4ae1c7a8f148f48d",
+    # This one is for development, no asm included:
+    remote = "https://github.com/ctiller/boringssl-bazel.git",
+    commit = "32bfe16a53ad13523eadce08dd2f835bc2b0b52d",
+)
+
+bind(
+    name = "zlib",
+    actual = "@zlib_archive//:zlib",
+)
+
+new_http_archive(
+    name = "zlib_archive",
+    build_file = "zlib.BUILD",
+    sha256 = "879d73d8cd4d155f31c1f04838ecd567d34bebda780156f0e82a20721b3973d5",
+    strip_prefix = "zlib-1.2.8",
+    url = "http://zlib.net/zlib128.zip",
+)
+
