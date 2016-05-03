@@ -28,6 +28,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.examples.helloworld.GreeterGrpc;
 import io.grpc.examples.helloworld.HelloReply;
 import io.grpc.examples.helloworld.HelloRequest;
+import io.grpc.okhttp.OkHttpChannelBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,7 +108,7 @@ public class MainActivity extends Activity {
       protected String doInBackground(Void... nothing) {
           logger.info("doInBackground");
           try {
-              mChannel = ManagedChannelBuilder.forAddress(mHost, mPort)
+              mChannel = OkHttpChannelBuilder.forAddress(mHost, mPort)
                   .usePlaintext(true)
                   .build();
               Log.i("BazelSample", "Requesting greeting from server");
