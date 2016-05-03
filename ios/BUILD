@@ -1,11 +1,3 @@
-load("/third_party/grpc/upstream/grpc", "objc_grpc_library")
-
-objc_grpc_library(
-  name = "helloworld",
-  services = ["proto/helloworld.proto"],
-  other_messages = [],
-)
-
 ios_application(
   name = "app",
   binary = ":BazelSample_binary",
@@ -37,7 +29,7 @@ objc_binary(
     "SystemConfiguration", # used by grpc
   ],
   deps = [
-    ":helloworld",
+    "//proto:helloworld",
     "//third_party/grpc/upstream:grpc_client",
     "//third_party/grpc/upstream:rx_library",
   ],

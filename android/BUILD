@@ -1,13 +1,3 @@
-load("/third_party/grpc/grpc_proto", "proto_library")
-
-proto_library(
-  name = "exampleprotos",
-  src = "proto/helloworld.proto",
-  has_service = True,
-  generate_java = True,
-  generate_cc = False,
-)
-
 # The final binary rule, which builds the APK and sets the application manifest,
 # as well as any other resources needed by the application.
 # The package for the R class for resources is normally inferred from the
@@ -38,7 +28,7 @@ android_library(
     "src/main/java/com/google/bazel/example/android/activities/res/**"
   ]),
   deps = [
-    ":exampleprotos_java",
+    "//proto:helloworld_java",
     "@grpc_all//jar",
     "@maven_protobuf_java//jar",
   ],

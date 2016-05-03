@@ -1,15 +1,5 @@
 load("@bazel_tools//tools/build_defs/docker:docker.bzl", "docker_build")
 
-load("/third_party/grpc/grpc_proto", "proto_library")
-
-proto_library(
-  name = "helloworld",
-  src = "proto/helloworld.proto",
-  has_service = True,
-  generate_cc = False,
-  generate_java = True,
-)
-
 docker_build(
   name = "jre",
   base = "@docker_debian//:jessie",
@@ -24,7 +14,7 @@ java_library(
   name = "server",
   srcs = glob(["java/**/*.java"]),
   deps = [ 
-    ":helloworld_java",
+    "//proto:helloworld_java",
     "//external:guava",
     "//external:grpc-java",
     "//external:grpc-netty",
