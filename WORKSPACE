@@ -102,21 +102,6 @@ bind(
 )
 
 bind(
-  name = "protobuf_java_lib",
-  actual = "@protobuf//:protobuf_java",
-)
-
-bind(
-  name = "protoc",
-  actual = "@protobuf//:protoc"
-)
-
-bind(
-  name = "protobuf_compiler",
-  actual = "@protobuf//:protoc_lib",
-)
-
-bind(
   name = "netty_all",
   actual = "@netty_maven//jar",
 )
@@ -139,6 +124,11 @@ bind(
 bind(
   name = "libssl_objc",
   actual = "//third_party/openssl:libssl_objc",
+)
+
+bind(
+  name = "protobuf_java_lib",
+  actual = "@protobuf//:protobuf_java",
 )
 
 bind(
