@@ -4,13 +4,13 @@ cc_library(
   name = 'nanopb',
   visibility = ["//visibility:public"],
   srcs = [
-    'pb.h',
-    'pb_encode.c',
-    'pb_encode.h',
-    'pb_decode.c',
-    'pb_decode.h',
-    'pb_common.c',
-    'pb_common.h',
+    'upstream/pb.h',
+    'upstream/pb_encode.c',
+    'upstream/pb_encode.h',
+    'upstream/pb_decode.c',
+    'upstream/pb_decode.h',
+    'upstream/pb_common.c',
+    'upstream/pb_common.h',
   ],
 )
 
