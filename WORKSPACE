@@ -42,7 +42,12 @@ maven_jar(
 
 maven_jar(
   name = "okhttp_maven",
-  artifact = 'com.squareup.okhttp:okhttp:2.2.0',
+  artifact = 'com.squareup.okhttp:okhttp:2.5.0',
+)
+
+maven_jar(
+  name = "okio_maven",
+  artifact = 'com.squareup.okio:okio:1.6.0',
 )
 
 maven_jar(
@@ -79,12 +84,12 @@ maven_jar(
 
 maven_jar(
   name = "grpc_protobuf_nano_maven",
-  artifact = "io.grpc:grpc-protobuf-nano:0.14.0",
+  artifact = "io.grpc:grpc-protobuf-nano:0.13.2",
 )
 
 maven_jar(
   name = "grpc_stub_maven",
-  artifact = "io.grpc:grpc-stub:0.14.0",
+  artifact = "io.grpc:grpc-stub:0.13.2",
 )
 
 maven_jar(

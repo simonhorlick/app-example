@@ -100,7 +100,9 @@ public class MainActivity extends Activity {
           logger.info("sayHello");
           GreeterGrpc.GreeterBlockingStub stub = GreeterGrpc.newBlockingStub(channel);
           HelloRequest message = HelloRequest.newBuilder().setName("").build();
+          logger.info("sending message");
           HelloReply reply = stub.sayHello(message);
+          logger.info("got response");
           return "";
       }
 
@@ -111,9 +113,9 @@ public class MainActivity extends Activity {
               mChannel = OkHttpChannelBuilder.forAddress(mHost, mPort)
                   .usePlaintext(true)
                   .build();
-              Log.i("BazelSample", "Requesting greeting from server");
               return sayHello(mChannel);
           } catch (Exception e) {
+              logger.info("rpc failed: {}", e.getMessage());
               return "Failed... : " + e.getMessage();
           }
       }
@@ -124,6 +126,7 @@ public class MainActivity extends Activity {
           try {
               mChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
           } catch (InterruptedException e) {
+              logger.info("shutdown timed out");
               Thread.currentThread().interrupt();
           }
           //mResultText.setText(result);

@@ -13,6 +13,7 @@ android_binary(
   deps = [
     ":activities",
     "@slf4j_android_maven//jar",
+    "@okio_maven//jar",
   ],
 )
 
