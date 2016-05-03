@@ -74,6 +74,6 @@ docker_build(
   symlinks = {
     "/usr/bin/java": "/usr/lib/jvm/java-7-openjdk-amd64/bin/java",
   },
-  entrypoint = ["java", "-jar", "server_runner_deploy.jar"]
+  entrypoint = ["java", "-jar", "backend/server_runner_deploy.jar"]
 )
 

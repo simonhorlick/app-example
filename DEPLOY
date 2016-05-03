@@ -1,0 +1,9 @@
+# Build all targets:
+#  $ bazel build //ios:app //android:app //backend:backend.tar
+#
+
+# Load into local docker instance
+docker load -i bazel-bin/backend/backend.tar
+
+# Start container
+docker run -it -p 50051:50051 bazel/backend:backend
