@@ -36,6 +36,23 @@ def _genproto_impl(ctx):
         "--java_rpc_out=" +  srcjar.path
       ]
 
+  if ctx.attr.gen_android:
+    # Create .jar file base on .srcjar file name
+    srcjar = ctx.new_file(ctx.outputs.java_src.basename[:-6] + "jar")
+    outputs += [srcjar]
+    arguments += [
+      "--javanano_out=ignore_services=true:" +  srcjar.path
+    ]
+    if ctx.attr.has_service:
+      java_grpc_plugin = ctx.executable.grpc_java_plugin
+      inputs += [java_grpc_plugin]
+      # protoc --plugin=protoc-gen-grpc-java=build/binaries/java_pluginExecutable/protoc-gen-grpc-java \
+      #     --grpc-java_out=nano:"$OUTPUT_FILE" --proto_path="$DIR_OF_PROTO_FILE" "$PROTO_FILE"
+      arguments += [
+        "--plugin=protoc-gen-java_rpc=" + java_grpc_plugin.path,
+        "--java_rpc_out=nano=true:" + ctx.configuration.genfiles_dir.path,
+      ]
+
   ctx.action(
       mnemonic = "GenProto",
       inputs = inputs,
@@ -89,6 +106,7 @@ _genproto_attrs = {
   ),
   "gen_cc": attr.bool(),
   "gen_java": attr.bool(),
+  "gen_android": attr.bool(),
 }
 
 def _genproto_outputs(attrs):
@@ -125,6 +143,7 @@ def proto_library(name, src, deps=[],
                   generate_cc=True,
                   generate_go=False,
                   generate_java=False,
+                  generate_android=False,
                   generate_python=False,
                   has_service=False):
   # TODO(mzhao) python, go code generation is unsupported.
@@ -164,11 +183,35 @@ def proto_library(name, src, deps=[],
       deps = cc_deps,
     )
 
+  if generate_android:
+    java_deps = ["@maven_protobuf_java//jar"] #["@protobuf_javanano_maven//jar"] #["//external:protobuf_java_lib"]
+    if has_service:
+      java_deps += [
+        "@guava_maven//jar",
+        "@javax_annotation_maven//jar",
+        "@okhttp_maven//jar",
+        "@jsr305_maven//jar",
+        "@grpc_protobuf_maven//jar",
+        "@grpc_okhttp_maven//jar",
+        "@grpc_protobuf_nano_maven//jar",
+        "@grpc_stub_maven//jar",
+        "@grpc_core_maven//jar",
+      ]
+    for dep in deps:
+      java_deps += [dep + "_java"]
+    native.android_library(
+      name  = name + "_android",
+      visibility = visibility,
+      srcs = [proto_pkg.label()],
+      deps = java_deps,
+    )
+
   if generate_java:
     java_deps = ["@maven_protobuf_java//jar"] #["//external:protobuf_java_lib"]
     if has_service:
       java_deps += [
         "@grpc_all//jar",
+        #"//external:grpc-java",
         "@guava_maven//jar",
       ]
     for dep in deps:
@@ -179,3 +222,4 @@ def proto_library(name, src, deps=[],
       srcs = [proto_pkg.label()],
       deps = java_deps,
     )
+

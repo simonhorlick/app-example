@@ -32,6 +32,9 @@ import io.grpc.examples.helloworld.HelloRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,15 +45,19 @@ import java.net.URLConnection;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends Activity {
+  
+  static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    logger.info("onCreate");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    logger.info("onCreateOptionsMenu");
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_main, menu);
     return true;
@@ -58,6 +65,7 @@ public class MainActivity extends Activity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+    logger.info("onOptionsItemSelected");
     // Handle action bar item clicks here. The action bar will
     // automatically handle clicks on the Home/Up button, so long
     // as you specify a parent activity in AndroidManifest.xml.
@@ -72,13 +80,14 @@ public class MainActivity extends Activity {
   }
 
   private class GrpcTask extends AsyncTask<Void, Void, String> {
-      private String mHost;
+      private String mHost = "192.168.99.100";
       private String mMessage;
-      private int mPort;
+      private int mPort = 50051;
       private ManagedChannel mChannel;
 
       @Override
       protected void onPreExecute() {
+          logger.info("onPreExecute");
           //mHost = mHostEdit.getText().toString();
           //mMessage = mMessageEdit.getText().toString();
           //String portStr = mPortEdit.getText().toString();
@@ -87,6 +96,7 @@ public class MainActivity extends Activity {
       }
 
       private String sayHello(ManagedChannel channel) {
+          logger.info("sayHello");
           GreeterGrpc.GreeterBlockingStub stub = GreeterGrpc.newBlockingStub(channel);
           HelloRequest message = HelloRequest.newBuilder().setName("").build();
           HelloReply reply = stub.sayHello(message);
@@ -95,10 +105,12 @@ public class MainActivity extends Activity {
 
       @Override
       protected String doInBackground(Void... nothing) {
+          logger.info("doInBackground");
           try {
               mChannel = ManagedChannelBuilder.forAddress(mHost, mPort)
                   .usePlaintext(true)
                   .build();
+              Log.i("BazelSample", "Requesting greeting from server");
               return sayHello(mChannel);
           } catch (Exception e) {
               return "Failed... : " + e.getMessage();
@@ -107,6 +119,7 @@ public class MainActivity extends Activity {
 
       @Override
       protected void onPostExecute(String result) {
+          logger.info("onPostExecute");
           try {
               mChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
           } catch (InterruptedException e) {

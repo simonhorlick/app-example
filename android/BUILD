@@ -12,6 +12,7 @@ android_binary(
   ]),
   deps = [
     ":activities",
+    "@slf4j_android_maven//jar",
   ],
 )
 
@@ -28,9 +29,15 @@ android_library(
     "src/main/java/com/google/bazel/example/android/activities/res/**"
   ]),
   deps = [
-    "//proto:helloworld_java",
-    "@grpc_all//jar",
-    "@maven_protobuf_java//jar",
+    "//proto:helloworld_android",
+    #"@grpc_all//jar",
+    "@okhttp_maven//jar",
+    "@grpc_okhttp_maven//jar",
+    "@grpc_protobuf_maven//jar",
+    "@grpc_stub_maven//jar",
+    "@grpc_core_maven//jar",
+    #"@maven_protobuf_java//jar",
+    "@slf4j_api//jar",
   ],
 )
 

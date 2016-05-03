@@ -6,6 +6,7 @@ proto_library(
   src = "helloworld.proto",
   has_service = True,
   generate_java = True,
+  generate_android = True,
   generate_cc = False,
   visibility = ["//visibility:public"],
 )

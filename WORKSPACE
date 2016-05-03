@@ -36,8 +36,55 @@ maven_jar(
 )
 
 maven_jar(
+  name = "javax_annotation_maven",
+  artifact = 'javax.annotation:javax.annotation-api:1.2',
+)
+
+maven_jar(
+  name = "okhttp_maven",
+  artifact = 'com.squareup.okhttp:okhttp:2.2.0',
+)
+
+maven_jar(
+  name = "jsr305_maven",
+  artifact = 'com.google.code.findbugs:jsr305:3.0.0',
+)
+
+maven_jar(
+  name = "protobuf_javanano_maven",
+  artifact = 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-5',
+)
+
+#compile 'com.android.support:appcompat-v7:22.1.1'
+
+maven_jar(
   name = "grpc_all",
   artifact = "io.grpc:grpc-all:0.13.2",
+)
+
+maven_jar(
+  name = "grpc_core_maven",
+  artifact = "io.grpc:grpc-core:0.13.2",
+)
+
+maven_jar(
+  name = "grpc_okhttp_maven",
+  artifact = "io.grpc:grpc-okhttp:0.13.2",
+)
+
+maven_jar(
+  name = "grpc_protobuf_maven",
+  artifact = "io.grpc:grpc-protobuf:0.13.2",
+)
+
+maven_jar(
+  name = "grpc_protobuf_nano_maven",
+  artifact = "io.grpc:grpc-protobuf-nano:0.14.0",
+)
+
+maven_jar(
+  name = "grpc_stub_maven",
+  artifact = "io.grpc:grpc-stub:0.14.0",
 )
 
 maven_jar(
@@ -55,6 +102,11 @@ maven_jar(
   name = "logback_classic",
   artifact = "ch.qos.logback:logback-classic:1.1.7",
   sha1 = "9865cf6994f9ff13fce0bf93f2054ef6c65bb462",
+)
+
+maven_jar(
+  name = "slf4j_android_maven",
+  artifact = "org.slf4j:slf4j-android:1.7.21",
 )
 
 maven_jar(
@@ -94,6 +146,16 @@ http_file(
 bind(
   name = "guava",
   actual = "@guava_maven//jar",
+)
+
+bind(
+  name = "slf4j",
+  actual = "@slf4j_api//jar",
+)
+
+bind(
+  name = "slf4j_android",
+  actual = "@slf4j_android_maven//jar",
 )
 
 bind(
