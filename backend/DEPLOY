@@ -1,0 +1,3 @@
+bazel build backend.tar
+docker load -i bazel-bin/backend.tar
+docker run -it -p 50051:50051 bazel/:backend
