@@ -184,16 +184,3 @@ git_repository(
     commit = "32bfe16a53ad13523eadce08dd2f835bc2b0b52d",
 )
 
-bind(
-    name = "zlib",
-    actual = "@zlib_archive//:zlib",
-)
-
-new_http_archive(
-    name = "zlib_archive",
-    build_file = "zlib.BUILD",
-    sha256 = "879d73d8cd4d155f31c1f04838ecd567d34bebda780156f0e82a20721b3973d5",
-    strip_prefix = "zlib-1.2.8",
-    url = "http://zlib.net/zlib128.zip",
-)
-
