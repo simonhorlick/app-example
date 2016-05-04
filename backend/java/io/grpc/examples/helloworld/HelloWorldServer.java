@@ -39,6 +39,7 @@ import java.io.IOException;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Histogram;
 
 /**
@@ -90,7 +91,7 @@ public class HelloWorldServer {
    * Main launches the server from the command line.
    */
   public static void main(String[] args) throws IOException, InterruptedException {
-    final MetricsServer metrics = new MetricsServer();
+    final MetricsServer metrics = new MetricsServer(CollectorRegistry.defaultRegistry);
     final HelloWorldServer server = new HelloWorldServer();
     server.start();
     metrics.start();
