@@ -77,6 +77,10 @@ $ docker load -i bazel-bin/backend/prometheus.tar
 FIXME(simon): I have no idea why this doesn't work out-of-the-box:
 ```
 $ kubectl delete service prometheus
-$ kubectl expose replicationcontroller prometheus --port=9090 --external-ip=$(docker-machine ip dev)
+$ kubectl expose replicationcontroller prometheus --port=80 --target-port=9090 --external-ip=$(docker-machine ip dev)
+$ kubectl delete service backend
+$ kubectl expose replicationcontroller backend --external-ip=$(docker-machine ip dev)
+$ kubectl annotate service backend prometheus.io/scrape='true'
+$ kubectl annotate service backend prometheus.io/port='9090'
 ```
 
