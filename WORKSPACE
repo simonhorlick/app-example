@@ -60,8 +60,6 @@ maven_jar(
   artifact = 'com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-5',
 )
 
-#compile 'com.android.support:appcompat-v7:22.1.1'
-
 maven_jar(
   name = "grpc_all",
   artifact = "io.grpc:grpc-all:0.13.2",
@@ -98,13 +96,13 @@ maven_jar(
 )
 
 maven_jar(
-  name = "logback_core",
+  name = "logback_core_maven",
   artifact = "ch.qos.logback:logback-core:1.1.7",
   sha1 = "7873092d39ef741575ca91378a6a21c388363ac8",
 )
 
 maven_jar(
-  name = "logback_classic",
+  name = "logback_classic_maven",
   artifact = "ch.qos.logback:logback-classic:1.1.7",
   sha1 = "9865cf6994f9ff13fce0bf93f2054ef6c65bb462",
 )
@@ -115,7 +113,7 @@ maven_jar(
 )
 
 maven_jar(
-  name = "slf4j_api",
+  name = "slf4j_api_maven",
   artifact = "org.slf4j:slf4j-api:1.7.13",
   sha1 = "7fcf30c25b8f4a9379b9dad0d3f487b25272c026",
 )
@@ -159,13 +157,23 @@ bind(
 )
 
 bind(
+  name = "logback_core",
+  actual = "@logback_core_maven//jar",
+)
+
+bind(
+  name = "logback_classic",
+  actual = "@logback_classic_maven//jar",
+)
+
+bind(
   name = "guava",
   actual = "@guava_maven//jar",
 )
 
 bind(
   name = "slf4j",
-  actual = "@slf4j_api//jar",
+  actual = "@slf4j_api_maven//jar",
 )
 
 bind(

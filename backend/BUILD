@@ -20,9 +20,10 @@ java_library(
     "//external:grpc-netty",
     "//external:prometheus_client_java",
     "//external:prometheus_exporter_java",
-    "@logback_core//jar",
-    "@logback_classic//jar",
-    "@slf4j_api//jar",
+    "//external:netty_all",
+    "//external:logback_core",
+    "//external:logback_classic",
+    "//external:slf4j",
   ],
 )
 

@@ -38,7 +38,8 @@ android_library(
     "@grpc_stub_maven//jar",
     "@grpc_core_maven//jar",
     #"@maven_protobuf_java//jar",
-    "@slf4j_api//jar",
+    "@slf4j_api_maven//jar",
+    #"//external:slf4j",
   ],
 )
 
