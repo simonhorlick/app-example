@@ -30,7 +30,7 @@ android_library(
     "src/main/java/com/google/bazel/example/android/activities/res/**"
   ]),
   deps = [
-    "//proto:helloworld_android",
+    "//proto:helloworld_java",
     #"@grpc_all//jar",
     "@okhttp_maven//jar",
     "@grpc_okhttp_maven//jar",
