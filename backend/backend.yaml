@@ -1,46 +1,45 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: backend
   labels:
-    name: horlick.me
+    app: example-1
+    prometheus.io/scrape: true
+    prometheus.io/port: 9090
 spec:
   type: LoadBalancer
   ports:
-  - port: 443
-    name: ssl
-  - port: 80
+  - port: 50051
     name: tcp
   selector:
-    name: horlick.me
+    app: example-1
 ---
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: frontend
+  name: backend
 spec:
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
-        name: horlick.me
+        app: example-1
     spec:
       containers:
-      - name: frontend
-        image: eu.gcr.io/quant-finance-1143/horlick.me:latest
+      - name: backend
+        image: bazel/backend:backend
         env:
         resources:
           requests:
             memory: "1Mi"
             cpu: "10m"
         ports:
-        - containerPort: 80
-        - containerPort: 443
-        volumeMounts:
-        - name: secrets
-          mountPath: /etc/secrets
-          readOnly: true
-      volumes:
-      - name: secrets
-        secret:
-          secretName: frontend-secrets
+        - containerPort: 50051
+        #volumeMounts:
+        #- name: secrets
+        #  mountPath: /etc/secrets
+        #  readOnly: true
+      #volumes:
+      #- name: secrets
+      #  secret:
+      #    secretName: frontend-secrets
