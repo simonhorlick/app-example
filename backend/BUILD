@@ -68,7 +68,10 @@ java_binary(
 docker_build(
   name = "backend",
   base = ":jre",
-  ports = ["50051"],
+  ports = [
+    "9090",   # metrics
+    "50051",  # grpc
+  ],
   data_path = "/",
   files = [
     ":server_runner_deploy.jar",
