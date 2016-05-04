@@ -18,6 +18,8 @@ java_library(
     "//external:guava",
     "//external:grpc-java",
     "//external:grpc-netty",
+    "//external:prometheus_client_java",
+    "//external:prometheus_exporter_java",
     "@logback_core//jar",
     "@logback_classic//jar",
     "@slf4j_api//jar",

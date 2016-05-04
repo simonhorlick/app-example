@@ -149,6 +149,16 @@ http_file(
 )
 
 bind(
+  name = "prometheus_client_java",
+  actual = "//third_party/prometheus/client_java:simpleclient",
+)
+
+bind(
+  name = "prometheus_exporter_java",
+  actual = "//third_party/prometheus/client_java:simpleclient_common",
+)
+
+bind(
   name = "guava",
   actual = "@guava_maven//jar",
 )
