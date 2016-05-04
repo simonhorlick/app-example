@@ -1,4 +1,11 @@
-.gradle
+*.gradle
+gradle.properties
+gradlew
+gradlew.bat
+gradle
+.idea
+*.swp
+*.iml
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
