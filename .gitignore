@@ -3,6 +3,7 @@ gradle.properties
 gradlew
 gradlew.bat
 gradle
+local.properties
 .idea
 *.swp
 *.iml
