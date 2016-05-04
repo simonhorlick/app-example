@@ -22,13 +22,13 @@ import io.netty.handler.logging.LoggingHandler;
 
 public class MetricsServer {
 
+    private final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+    private final EventLoopGroup workerGroup = new NioEventLoopGroup();
+
     static final Logger logger = LoggerFactory.getLogger(MetricsServer.class);
 
-    public void init() {
+    public void start() {
         // Configure the server.
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
@@ -46,21 +46,23 @@ public class MetricsServer {
                     });
 
             // Bind and listen on the given port.
-            Channel ch = bootstrap.bind(80).sync().channel();
+            Channel ch = bootstrap.bind(8080).sync().channel();
 
-            logger.info("Server listening on port {}", 80);
+            logger.info("Server listening on port {}", 8080);
 
             // Block indefinitely.
-            ch.closeFuture().sync();
+            //ch.closeFuture().sync();
 
         } catch(Throwable th) {
             logger.error("Error", th);
-        } finally {
-            logger.info("Server shutdown started");
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-            logger.info("Server shutdown completed");
         }
+    }
+
+    public void shutdown() {
+        logger.info("Server shutdown started");
+        bossGroup.shutdownGracefully();
+        workerGroup.shutdownGracefully();
+        logger.info("Server shutdown completed");
     }
 
     private class MetricsRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {

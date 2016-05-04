@@ -90,9 +90,12 @@ public class HelloWorldServer {
    * Main launches the server from the command line.
    */
   public static void main(String[] args) throws IOException, InterruptedException {
+    final MetricsServer metrics = new MetricsServer();
     final HelloWorldServer server = new HelloWorldServer();
     server.start();
+    metrics.start();
     server.blockUntilShutdown();
+    metrics.shutdown();
   }
 
   private class GreeterImpl implements GreeterGrpc.Greeter {
