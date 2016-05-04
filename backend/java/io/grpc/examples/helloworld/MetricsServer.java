@@ -46,10 +46,13 @@ public class MetricsServer {
 
     private final CollectorRegistry registry;
 
+    private final int port;
+
     static final Logger logger = LoggerFactory.getLogger(MetricsServer.class);
 
-    public MetricsServer(CollectorRegistry registry) {
+    public MetricsServer(CollectorRegistry registry, int port) {
         this.registry = registry;
+        this.port = port;
     }
 
     public void start() {
@@ -71,9 +74,9 @@ public class MetricsServer {
                     });
 
             // Bind and listen on the given port.
-            Channel ch = bootstrap.bind(8080).sync().channel();
+            Channel ch = bootstrap.bind(port).sync().channel();
 
-            logger.info("Server listening on port {}", 8080);
+            logger.info("Server listening on port {}", port);
 
             // Block indefinitely.
             //ch.closeFuture().sync();

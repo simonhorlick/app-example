@@ -91,7 +91,7 @@ public class HelloWorldServer {
    * Main launches the server from the command line.
    */
   public static void main(String[] args) throws IOException, InterruptedException {
-    final MetricsServer metrics = new MetricsServer(CollectorRegistry.defaultRegistry);
+    final MetricsServer metrics = new MetricsServer(CollectorRegistry.defaultRegistry, 9090);
     final HelloWorldServer server = new HelloWorldServer();
     server.start();
     metrics.start();
