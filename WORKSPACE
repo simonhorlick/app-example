@@ -146,6 +146,12 @@ http_file(
   sha256 = "481af9931f3352a51a579511a20ff3d57068681d6c760513590200a71fe49a50",
 )
 
+http_file(
+  name = "prometheus_binary",
+  url = "https://github.com/prometheus/prometheus/releases/download/0.18.0/prometheus-0.18.0.linux-amd64.tar.gz",
+  sha256 = "dfcdf8f77deb3ced5976a27795c80806aad596037347304b790ceae09dfb1bb9",
+)
+
 bind(
   name = "prometheus_client_java",
   actual = "//third_party/prometheus/client_java:simpleclient",

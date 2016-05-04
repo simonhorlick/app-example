@@ -1,6 +1,27 @@
 load("@bazel_tools//tools/build_defs/docker:docker.bzl", "docker_build")
 
 docker_build(
+  name = "prometheus_base",
+  base = "@docker_debian//:jessie",
+  tars = [
+    "@prometheus_binary//file",
+  ],
+)
+
+docker_build(
+  name = "prometheus",
+  base = ":prometheus_base",
+  files = [
+    "prometheus.conf.yaml",
+  ],
+  entrypoint = [
+    "/prometheus-0.18.0.linux-amd64/prometheus",
+      "-storage.local.memory-chunks=1048576", # Default is 1048576
+      "-config.file=/prometheus.conf.yaml",
+  ],
+)
+
+docker_build(
   name = "jre",
   base = "@docker_debian//:jessie",
   debs = [

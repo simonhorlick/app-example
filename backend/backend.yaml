@@ -4,8 +4,9 @@ metadata:
   name: backend
   labels:
     app: example-1
-    prometheus.io/scrape: true
-    prometheus.io/port: 9090
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '9090'
 spec:
   type: LoadBalancer
   ports:

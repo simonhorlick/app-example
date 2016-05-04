@@ -18,7 +18,7 @@ scrape_configs:
   kubernetes_sd_configs:
   - api_servers:
     - 'https://kubernetes.default.svc'
-	  in_cluster: true
+    in_cluster: true
 
   relabel_configs:
   - source_labels: [__meta_kubernetes_role]

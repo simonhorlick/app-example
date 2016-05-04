@@ -38,3 +38,45 @@ $ kubectl config use-context test-doc
 $ kubectl create -f backend/namespace-example-staging.yaml
 $ kubectl create -f backend/namespace-example-prod.yaml
 ```
+
+```
+$ kubectl --namespace=staging create -f backend/backend.yaml
+```
+
+Push the built image to docker if it doesn't already exist:
+```
+$ docker load -i bazel-bin/backend/backend.tar
+```
+
+Ensure the three replicated backend pods started correctly:
+```
+$ kubectl --namespace staging get pods
+```
+
+Start SkyDNS, or discovery won't work..
+```
+$ export DNS_REPLICAS=1
+$ export DNS_DOMAIN=cluster.local # specify in startup parameter `--cluster-domain` for containerized kubelet 
+$ export DNS_SERVER_IP=10.0.0.10  # specify in startup parameter `--cluster-dns` for containerized kubelet 
+sed -e "s/{{ pillar\['dns_replicas'\] }}/${DNS_REPLICAS}/g;s/{{ pillar\['dns_domain'\] }}/${DNS_DOMAIN}/g;s/{{ pillar\['dns_server'\] }}/${DNS_SERVER_IP}/g" skydns.yaml.in > ./skydns.yaml
+# If the kube-system namespace isn't already created, create it
+$ kubectl create namespace kube-system
+$ kubectl create -f ./skydns.yaml
+```
+
+Start Prometheus:
+```
+$ kubectl create --validate=false -f backend/prometheus.yaml
+```
+
+Push the built image to docker if it doesn't already exist:
+```
+$ docker load -i bazel-bin/backend/prometheus.tar
+```
+
+FIXME(simon): I have no idea why this doesn't work out-of-the-box:
+```
+$ kubectl delete service prometheus
+$ kubectl expose replicationcontroller prometheus --port=9090 --external-ip=$(docker-machine ip dev)
+```
+
