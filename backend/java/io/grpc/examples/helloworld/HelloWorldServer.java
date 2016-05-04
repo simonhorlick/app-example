@@ -40,6 +40,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.Counter;
 import io.prometheus.client.Histogram;
 
 /**
@@ -53,7 +54,13 @@ public class HelloWorldServer {
   private Server server;
 
   static final Histogram requestLatency = Histogram.build()
-          .name("requests_latency_seconds").help("Request latency in seconds.").register();
+          .name("requests_latency_seconds")
+          .help("Request latency in seconds.")
+          .register();
+  static final Counter requests = Counter.build()
+          .name("request_total")
+          .help("Total number of requests.")
+          .register();
 
   private void start() throws IOException {
     server = ServerBuilder.forPort(port)
@@ -104,6 +111,7 @@ public class HelloWorldServer {
     @Override
     public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
       Histogram.Timer requestTimer = requestLatency.startTimer();
+      requests.inc();
       try {
         HelloReply reply = HelloReply.newBuilder().setMessage("Hello " + req.getName()).build();
         responseObserver.onNext(reply);
