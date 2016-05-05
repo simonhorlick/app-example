@@ -13,17 +13,6 @@ git_repository(
   tag = "v3.0.0-beta-2",
 )
 
-git_repository(
-  name = "boringssl_git",
-  init_submodules = True,
-  # Use this one for linux:
-  #remote = "https://github.com/mdsteele/boringssl-bazel.git",
-  #commit = "436432d849b83ab90f18773e4ae1c7a8f148f48d",
-  # This one is for development, no asm included:
-  remote = "https://github.com/ctiller/boringssl-bazel.git",
-  commit = "32bfe16a53ad13523eadce08dd2f835bc2b0b52d",
-)
-
 maven_jar(
   name = "guava_maven",
   artifact = "com.google.guava:guava:19.0",
@@ -208,13 +197,23 @@ bind(
 )
 
 bind(
+  name = "libcrypto",
+  actual = "//third_party/boringssl:crypto",
+)
+
+bind(
   name = "libssl",
-  actual = "@boringssl_git//:ssl",
+  actual = "//third_party/boringssl:ssl",
+)
+
+bind(
+  name = "libcrypto_objc",
+  actual = "//third_party/boringssl:crypto_objc",
 )
 
 bind(
   name = "libssl_objc",
-  actual = "//third_party/openssl:libssl_objc",
+  actual = "//third_party/boringssl:ssl_objc",
 )
 
 bind(

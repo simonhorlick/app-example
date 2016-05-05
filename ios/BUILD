@@ -1,24 +1,13 @@
 ios_application(
   name = "app",
-  binary = ":BazelSample_binary",
-  bundles = [
-  #  ":PrenotCalculatorResources"
-  ],
-  #datamodels = glob(["PrenotCalculator/DataModel.xcdatamodeld/**"]),
-  infoplist = "src/Info.plist",
+  binary = ":app-binary",
+  infoplist = "src/app-Info.plist",
   storyboards = ["src/Base.lproj/Main.storyboard"],
   asset_catalogs = ["src/Images.xcassets/AppIcon.appiconset/Contents.json"],
-  #visibility = ["//visibility:public"],
-  #xibs = ["PrenotCalculator/CalculatorViewController.xib"],
 )
 
-#objc_bundle_library(
-#  name = "BazelSampleResources",
-#  resources = glob(["Resources/**"]),
-#)
-
 objc_binary(
-  name = "BazelSample_binary",
+  name = "app-binary",
   srcs = [
     "src/main.m",
     "src/AppDelegate.m",
@@ -34,6 +23,4 @@ objc_binary(
     "//third_party/grpc/upstream:rx_library",
   ],
 )
-
-# FIXME(simon): Use ios_application rule as the application-related attributes (infoplist, app_icon, resources, xibs, datamodels...) on this rule are deprecated.
 
