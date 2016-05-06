@@ -31,7 +31,53 @@
  *
  */
 
-#import <UIKit/UIKit.h>
+//#import <RxLibrary/GRXWriteable.h>
+//#import <RxLibrary/GRXWriter+Immediate.h>
+//#import <grpc/grpc.h>
+//
+//@implementation ViewController
+//
+//- (void)viewDidLoad {
+//  [super viewDidLoad];
+//
+//  GRXWriter *writer = [GRXWriter writerWithValue:@"Yay!"];
+//  GRXWriteable *writeable = [GRXWriteable writeableWithSingleHandler:^(id value, NSError *errorOrNil) {
+//    NSLog(@"%@", value);
+//  }];
+//  [writer startWithWriteable:writeable];
+//
+//  grpc_metadata_array array;
+//  grpc_metadata_array_init(&array);
+//}
 
-@interface ViewController : UIViewController
+#import "UrlGetViewController.h"
+
+#import <RxLibrary/GRXWriteable.h>
+#import <RxLibrary/GRXWriter+Immediate.h>
+#import <grpc/grpc.h>
+
+@interface UrlGetViewController ()
+@end
+
+@implementation UrlGetViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  GRXWriter *writer = [GRXWriter writerWithValue:@"Yay!"];
+  GRXWriteable *writeable = [GRXWriteable writeableWithSingleHandler:^(id value, NSError *errorOrNil) {
+    NSLog(@"%@", value);
+  }];
+  [writer startWithWriteable:writeable];
+
+  grpc_metadata_array array;
+  grpc_metadata_array_init(&array);
+}
+
+- (IBAction)getUrl:(id)sender {
+    NSURL *url = [NSURL URLWithString:self.urlTextField.text];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    self.urlContentTextView.text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
 @end

@@ -30,9 +30,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
 #import <UIKit/UIKit.h>
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-@property (strong, nonatomic) UIWindow *window;
-@end
+                
+int main(int argc, char * argv[]) {
+  @autoreleasepool {
+    NSString *delegateClassName = @"AppDelegate";
+    return UIApplicationMain(argc, argv, nil, delegateClassName);
+  }
+}

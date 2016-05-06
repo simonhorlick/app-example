@@ -1,26 +1,34 @@
 ios_application(
-  name = "app",
-  binary = ":app-binary",
-  infoplist = "src/app-Info.plist",
-  storyboards = ["src/Base.lproj/Main.storyboard"],
-  asset_catalogs = ["src/Images.xcassets/AppIcon.appiconset/Contents.json"],
+  name = "ios-app",
+  binary = "ios-app-binary",
+  infoplist = "UrlGet/UrlGet-Info.plist",
 )
 
 objc_binary(
-  name = "app-binary",
+  name = "ios-app-binary",
   srcs = [
-    "src/main.m",
-    "src/AppDelegate.m",
-    "src/ViewController.m",
+    "UrlGet/main.m",
   ],
-  hdrs = glob(["src/*.h"]),
   sdk_frameworks = [
     "SystemConfiguration", # used by grpc
   ],
   deps = [
-    "//proto:helloworld",
-    "//third_party/grpc/upstream:grpc_client",
-    "//third_party/grpc/upstream:rx_library",
+        ":UrlGetClasses",
   ],
+)
+
+objc_library(
+    name = "UrlGetClasses",
+    srcs = [
+        "UrlGet/AppDelegate.m",
+        "UrlGet/UrlGetViewController.m",
+    ],
+    hdrs = glob(["UrlGet/*.h"]),
+    deps = [
+    #  "//proto:helloworld",
+      "//third_party/grpc/upstream:grpc_client",
+      "//third_party/grpc/upstream:rx_library",
+    ],
+    xibs = ["UrlGet/UrlGetViewController.xib"],
 )
 

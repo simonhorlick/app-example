@@ -31,25 +31,14 @@
  *
  */
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-#import <RxLibrary/GRXWriteable.h>
-#import <RxLibrary/GRXWriter+Immediate.h>
-#import <grpc/grpc.h>
+@interface UrlGetViewController : UIViewController
+    
+- (IBAction)getUrl:(id)sender;
 
-@implementation ViewController
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-
-  GRXWriter *writer = [GRXWriter writerWithValue:@"Yay!"];
-  GRXWriteable *writeable = [GRXWriteable writeableWithSingleHandler:^(id value, NSError *errorOrNil) {
-    NSLog(@"%@", value);
-  }];
-  [writer startWithWriteable:writeable];
-
-  grpc_metadata_array array;
-  grpc_metadata_array_init(&array);
-}
+@property (weak, nonatomic) IBOutlet UITextView *urlContentTextView;
+@property (weak, nonatomic) IBOutlet UITextField *urlTextField;
 
 @end
+
