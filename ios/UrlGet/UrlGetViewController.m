@@ -34,8 +34,9 @@
 #import "UrlGetViewController.h"
 
 #import <GRPCClient/GRPCCall.h>
+#import <GRPCClient/GRPCCall+Tests.h>
 #import <ProtoRPC/ProtoMethod.h>
-#import <Test.pbrpc.h>
+#import <Helloworld.pbrpc.h>
 #import <RxLibrary/GRXWriter+Immediate.h>
 #import <RxLibrary/GRXWriteable.h>
 
@@ -44,49 +45,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString * const kRemoteHost = @"grpc-test.sandbox.googleapis.com";
+    NSString * const kRemoteHost = @"192.168.99.100:50051";
     
-    RMTSimpleRequest *request = [[RMTSimpleRequest alloc] init];
-    request.responseSize = 10;
-    request.fillUsername = YES;
-    request.fillOauthScope = YES;
+    // FIXME(simon): Enable TLS.
+    [GRPCCall useInsecureConnectionsForHost:kRemoteHost];
     
-    // Example gRPC call using a generated proto client library:
-    
-    RMTTestService *service = [[RMTTestService alloc] initWithHost:kRemoteHost];
-    [service unaryCallWithRequest:request handler:^(RMTSimpleResponse *response, NSError *error) {
+    // Create the service.
+    HLWGreeter *service = [[HLWGreeter alloc] initWithHost:kRemoteHost];
+
+    // Allocate a request object.
+    HLWHelloRequest *request = [[HLWHelloRequest alloc] init];
+    request.name = @"Simon";
+
+    // Call the RPC with the request.
+    [service sayHelloWithRequest:request handler:^(HLWHelloReply *response, NSError *error) {
         if (response) {
             NSLog(@"Finished successfully with response:\n%@", response);
         } else if (error) {
             NSLog(@"Finished with error: %@", error);
         }
     }];
-    
-    
-    // Same example call using the generic gRPC client library:
-    
-    ProtoMethod *method = [[ProtoMethod alloc] initWithPackage:@"grpc.testing"
-                                                       service:@"TestService"
-                                                        method:@"UnaryCall"];
-    
-    GRXWriter *requestsWriter = [GRXWriter writerWithValue:[request data]];
-    
-    GRPCCall *call = [[GRPCCall alloc] initWithHost:kRemoteHost
-                                               path:method.HTTPPath
-                                     requestsWriter:requestsWriter];
-    
-    id<GRXWriteable> responsesWriteable = [[GRXWriteable alloc] initWithValueHandler:^(NSData *value) {
-        RMTSimpleResponse *response = [RMTSimpleResponse parseFromData:value error:NULL];
-        NSLog(@"Received response:\n%@", response);
-    } completionHandler:^(NSError *errorOrNil) {
-        if (errorOrNil) {
-            NSLog(@"Finished with error: %@", errorOrNil);
-        } else {
-            NSLog(@"Finished successfully.");
-        }
-    }];
-    
-    [call startWithWriteable:responsesWriteable];
 }
 
 - (IBAction)getUrl:(id)sender {

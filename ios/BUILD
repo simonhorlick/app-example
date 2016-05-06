@@ -34,7 +34,7 @@ objc_library(
     ],
     hdrs = glob(["UrlGet/*.h"]),
     deps = [
-      ":test",
+      "//proto:helloworld",
       "//third_party/grpc/upstream:grpc_client",
       "//third_party/grpc/upstream:rx_library",
     ],
